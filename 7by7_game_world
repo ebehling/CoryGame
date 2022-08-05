@@ -1,0 +1,87 @@
+
+
+worldTileNames=["The Void", "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+
+
+turn_number = 1
+alignment_list = ["Water",'Earth','Air']
+
+
+wt_growth_rates = [[10,10,10,10,10,10],[2,3,1,4,3,1,2],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[2,2,1,1,1,0,0],[1,0,2,1,0,2,1],[0,1,0,1,2,1,2]]
+# initial population, population growth, initial ECs, initial ACs, initial WCs, E growth, A growth, W growth
+
+worldTiles = [[0,0,0,0,0,0,0,0],[10,2,0,0,0,2,1,0],[10,3,0,0,0,2,0,1],[10,1,0,0,0,1,2,0],[10,4,0,0,0,1,1,1],[10,3,0,0,0,1,0,2],[10,1,0,0,0,0,2,1],[10,2,0,0,0,0,1,2]]
+
+worldTileState = [[0,0,0,0,0,0,0,0],[10,2,0,0,0,2,1,0],[10,3,0,0,0,2,0,1],[10,1,0,0,0,1,2,0],[10,4,0,0,0,1,1,1],[10,3,0,0,0,1,0,2],[10,1,0,0,0,0,2,1],[10,2,0,0,0,0,1,2]]
+
+
+
+def turnByTurnGrowth(wt_number):
+    '''takes the current turn number and wt number and returns 
+    a list of the new pop, EC, AC and WC amounts for that tile '''
+    
+    popG = wt_number[0]+wt_number[1]
+    ECs = wt_number[2]+wt_number[5]
+    ACs = wt_number[3]+wt_number[6]
+    WCs = wt_number[4]+wt_number[7]
+    return [popG, wt_number[1], ECs, ACs, WCs, wt_number[5],wt_number[6],wt_number[7]]
+
+def boardTurn(x):
+    '''takes the current worldTile state and returns the state of the board for the next turn'''
+    L0 = []
+    for i in range(len(worldTiles)):
+        L0 += [turnByTurnGrowth(x[i])]
+    return L0
+
+def terminalBoardTurn(currentTurnNumber, worldTileState):
+    '''takes the current worldTile state and returns the state of the board for the next turn'''
+    currentTurnNumber +=1
+    L0 = []
+    for i in range(len(worldTileState)):
+        L0 += [turnByTurnGrowth(worldTileState[i])]
+    return currentTurnNumber, L0
+
+
+
+#print (boardTurn(worldTiles))        
+
+
+def anyBoardTurn(worldTileState, N):
+    '''takes the current worldTileState and returns the state of the board for the any turn (N)'''
+
+    if N == 0: 
+        return worldTileState
+    if N > 0:
+        L0=[]
+        for i in range(len(worldTileState)):
+            L0 += [turnByTurnGrowth(worldTileState[i])]
+        return anyBoardTurn(L0, N-1)
+    return L0
+
+#print(anyBoardTurn(worldTileState, 1)[1])
+
+#print(anyBoardTurn(worldTileState, 100)[1])
+
+
+Brokefast mountin["population", ]
+
+
+
+
+
+
+
+earthGrowthDict = {'wt1': 2,'wt2': 2, 'wt3': 1, 'wt4': 1, 'wt5': 1, 'wt6': 0, 'wt7': 0}
+
+
+def populationGrowth(x,y,z):
+    '''Creates a function that takes the  the inital population (x),
+    the desired number of turns (y) and the growth 
+    rate (z) and returns the final population'''
+    return x + y*z 
+def coreGrowth(x, y, z):
+    '''Creates a function that takes the the inital number of cores (x), 
+    the desired number of turns (y) and the growth 
+    rate of the affinity (z) and return the final number of cores '''
+    return x + y*z
+#def earthCoreGrowth

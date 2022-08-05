@@ -1,0 +1,190 @@
+
+
+
+
+
+brokefastMountains = {"Name": "The Brokefast Mountains", "Population" : 10000, "Pop Growth" : 2, "Earth Growth" : 2, "Air Growth" : 1, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": True}
+wanderingForest1 = {"Name": "The Northern Wandering Forest","Population" : 10, "Pop Growth" : 3, "Earth Growth" : 2, "Air Growth" : 0, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": True}
+easternHighlands = {"Name": "The Eastern Highlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 1, "Air Growth" : 2, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": False}
+theCitadel = {"Name": "The Citadel", "Population" : 10, "Pop Growth" : 4, "Earth Growth" : 1, "Air Growth" : 1, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": False}
+wanderingForest2 = {"Name": "The Southern Wandering Forest", "Population" : 10, "Pop Growth" : 3, "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": False}
+easternLowlands = {"Name": "The Eastern Lowlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 0, "Air Growth" : 2, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": False}
+theFoglands = {"Name": "The Foglands", "Population" : 10, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "Tile Ownership": False}
+
+def menu():
+    """Prints the menu of options that the user can choose."""
+    print()
+    print("(0) Next Player Turn")
+    print()
+
+
+
+theWinterKnight = {"Name": "The Winter Knight", "Affinity": "Water", "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 1}
+archibaldTheBrave = {"Name": "Archibald the Brave", "Affinity": "Earth", "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 0}
+theSunSummoner = {"Name": "The Sun Summoner", "Affinity": "Air", "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 0}
+
+World = {"1": brokefastMountains, "2": wanderingForest1, "3": easternHighlands, "4": theCitadel, "5": wanderingForest2, "6": easternLowlands, "7": theFoglands}
+Champions = {"Champion1": theWinterKnight, "Champion2": archibaldTheBrave, "Champion3": theSunSummoner}
+
+
+class Player:
+    def __init__(self, name):
+        self.name = name
+  
+    def createNewPlayer(self, playerInfo):
+        self.playerInfo = playerInfo
+    
+        newPlayer = (self.playerInfo)
+        return newPlayer
+   
+
+
+
+playerInfo = {"owned_tiles" : ["1", "2"], "owned_champions": ["Champion1", "Champion2"], "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
+player = Player(playerInfo)
+
+player2Info = {"owned_tiles" : [], "owned_champions": ["Champion2"], "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
+player2 = Player(player2Info)
+
+def playerCoreGrowth(player):
+    if len(player["owned_tiles"]) > 0:
+        for i in player["owned_tiles"]:
+            print(type(i))
+            player["Earth Cores"] += player["owned_tiles"][i]["Earth Growth"]
+        for i in player["owned_tiles"]:
+            player["Air Cores"] += player["owned_tiles"][i]["Air Growth"]
+        for i in player["owned_tiles"]:
+            player["Water Cores"] += player["owned_tiles"][i]["Water Growth"]
+    if len(player["owned_champions"]) > 0:
+        for i in player["owned_champions"]:
+            player["Earth Cores"] += player["owned_champions"][i]["Earth Growth"]
+        for i in player["owned_champions"]:
+            player["Air Cores"] += player["owned_champions"][i]["Air Growth"]
+        for i in player["owned_champions"]:
+            player["Water Cores"] += player["owned_champions"][i]["Water Growth"]
+
+
+
+
+
+
+
+def main():
+    """The main user-interaction loop."""
+
+    player1 = player.createNewPlayer(playerInfo)
+    player2 = player.createNewPlayer(player2Info)
+    currentPlayers = [player1, player2]
+    print()
+    print("---------------------------------------")
+    print()
+    print("Player 1 information: ", player1)
+    print("Player 2 information: ", player2)
+
+
+
+
+
+    while True:       # The user-interaction loop
+        print()
+        print("---------------------------------------")
+        print(player1)
+        print()
+        print("Player 1 Stats")
+        print("    Current Earth Cores:", player1["Earth Cores"])
+        print("    Current Air Cores:", player1["Air Cores"])
+        print("    Current Water Cores:", player1["Water Cores"])
+        print()
+        print("Player 2 Stats")
+        print("    Current Earth Cores:", player2["Earth Cores"])
+        print("    Current Air Cores:", player2["Air Cores"])
+        print("    Current Water Cores:", player2["Water Cores"])
+        print()
+
+            
+        menu()
+        choice = input("Choose an option: ")
+
+        #
+        # "Clean and check" the user's input
+        # 
+        try:
+            choice = int(choice)   # Make into an int!
+        except:
+            print("I didn't understand your input! Continuing...")
+            continue
+
+        
+        if choice == 9:    # We want to quit
+            break          # Leaves the while loop altogether
+
+
+        if choice == 0:
+            for i in currentPlayers:
+                playerCoreGrowth(i)
+
+        
+        
+        else:
+            print(choice, " ?      That's not on the menu!")
+
+    print()
+    print("See you yesterday!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__": 
+    main()

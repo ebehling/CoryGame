@@ -1,0 +1,164 @@
+from helper import * 
+
+def import_example(): 
+    statement = helper.help_me
+    print(statement)
+
+#
+# Example user-interaction looping program
+#  (a variant of the one done in class)
+
+# I would build 
+#
+worldTileNames=["The Void", "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+menuLabels=["Population:", "Pop Growth:", "Earth Cores:", "Air Cores:", "Water Cores:", "Earth Alignment:", "Air Alignment:", "Water Alignment:"]
+
+def menu():
+    """Prints the menu of options that the user can choose."""
+    print()
+    print("(0) Enter a new World Tile State")
+    print("(1) Enter a new turn number")
+    print("(2) Advance to the next World Tile State")
+    print("(3) Print the Current World Tile State")
+    print("(4) Predict Future World Tile State")
+    print("(9) Break! (quit)")
+    print()
+
+def turnByTurnGrowth(wt_number):
+    '''wt number and returns 
+    a list of the new pop, EC, AC and WC amounts for that tile '''
+    
+    popG = wt_number[0]+wt_number[1]
+    ECs = wt_number[2]+wt_number[5]
+    ACs = wt_number[3]+wt_number[6]
+    WCs = wt_number[4]+wt_number[7]
+    return [popG, wt_number[1], ECs, ACs, WCs, wt_number[5],wt_number[6],wt_number[7]]
+
+def boardTurn(L):
+    '''takes the current worldTile state and returns the state of the board for the next turn'''
+    L0 = []
+    for i in range(len(L)):
+        L0 += [turnByTurnGrowth(L[i])]
+    return L0
+
+
+
+
+
+
+def main():
+    """The main user-interaction loop."""
+    secret_value = 4.2
+
+    test = import_example
+
+    #initial values
+
+    L = [[0,0,0,0,0,0,0,0],[10,2,0,0,0,2,1,0],[10,3,0,0,0,2,0,1],[10,1,0,0,0,1,2,0],[10,4,0,0,0,1,1,1],[10,3,0,0,0,1,0,2],[10,1,0,0,0,0,2,1],[10,2,0,0,0,0,1,2]]
+    turnNumber = 0
+    worldTileNames=["The Void", "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+
+
+    while True:       # The user-interaction loop
+        print()
+        print("Turn Number", turnNumber)
+        print()
+        print("The Current World Tile State is:")
+        print()
+        for i in range(len(L)):
+            L1 = worldTileNames[i]
+            L2 = L[i]
+            print(L1)
+            print(L2)
+            
+            
+        
+        
+        
+        
+        
+        
+        # for i in range(len(L)):
+        #     L1 = worldTileNames[i]
+        #     L2 = L[i]
+        #     print(L1)
+        #     for j in range(len(L)):
+        #         print(menuLabels[j], L2[j])
+        #     print()
+            
+        # dict.keys() returns all the keys as a list of strings
+        # dict.values() returns a list of all the values   
+          
+        menu()
+        choice = input("Choose an option: ")
+
+        #
+        # "Clean and check" the user's input
+        # 
+        try:
+            choice = int(choice)   # Make into an int!
+        except:
+            print("I didn't understand your input! Continuing...")
+            continue
+
+        #
+        # Run the appropriate menu option
+        #
+        if choice == 9:    # We want to quit
+            break          # Leaves the while loop altogether
+
+        elif choice == 0:  # Enters a new World Tile State (DELETES CURRENT STATE!!!!)
+            newL = input("Enter a new list: ")    # Enter _something_
+            
+            #
+            # "Clean and check" the user's input
+            #
+            try: 
+                newL = eval(newL) # eval runs Python's interpreter! Note: Danger!
+                if type(newL) != type([]): 
+                    print("That didn't seem like a list. Not changing L.")
+                else: 
+                    L = newL  # Here, things were OK, so let's set our list, L
+            except:
+                print("I didn't understand your input. Not changing L.")
+
+        elif choice == 1: # Change the current turn number 
+            newTurnNumber = input("Enter a new turn number: ")    # Enter _something_
+            
+            #
+            # "Clean and check" the user's input
+            #
+            try: 
+                newTurnNumber = eval(newTurnNumber) # eval runs Python's interpreter! Note: Danger!
+                if type(newTurnNumber) != type(int): 
+                    print("That didn't seem like a number. Not changing the turn number.")
+                else: 
+                    turnNumber = newTurnNumber  # Here, things were OK
+            except:
+                print("I didn't understand your input. Not changing the turn number.")
+
+
+        elif choice == 2:  # Advance to the next world tile state
+            L = boardTurn(L)
+            turnNumber +=1
+
+                       
+
+        elif choice == 3:  # Prints the current World Tile State
+            print()
+            print(L)
+                       
+
+        elif choice == 4:  # Unannounced menu option (more interesting...)
+            m = find_min(L)
+            print("The minimum value in L is", m)
+
+        elif choice == 5:  # Even more interesting unannounced menu option...
+            minval, minloc = find_min_loc(L)
+            print("The minimum value in L is", minval, "at day #", minloc)
+
+        else:
+            print(choice, " ?      That's not on the menu!")
+
+    print()
+    print("See you yesterday!")

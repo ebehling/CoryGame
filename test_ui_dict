@@ -1,0 +1,44 @@
+brokefastMountains = {"Population" : 10, "Pop Growth" : 2, "Earth Growth" : 2, "Air Growth" : 1, "Water Growth" : 0}
+wanderingForest1 = {"Population" : 10, "Pop Growth" : 3, "Earth Growth" : 2, "Air Growth" : 0, "Water Growth" : 1}
+easternHighlands = {"Population" : 10, "Pop Growth" : 1, "Earth Growth" : 1, "Air Growth" : 2, "Water Growth" : 0}
+theCitadel = {"Population" : 10, "Pop Growth" : 4, "Earth Growth" : 1, "Air Growth" : 1, "Water Growth" : 1}
+wanderingForest2 = {"Population" : 10, "Pop Growth" : 3, "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 2}
+easternLowlands = {"Population" : 10, "Pop Growth" : 1, "Earth Growth" : 0, "Air Growth" : 2, "Water Growth" : 1}
+theFoglands = {"Population" : 10, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 2}
+
+World = {"1": brokefastMountains, "2": wanderingForest1, "3": easternHighlands, "4": theCitadel, "5": wanderingForest2, "6": easternLowlands, "7": theFoglands}
+
+print("god I hope this works " + str(World["1"]["Population"]))
+
+player = {"owned_tiles" : ["1", "2"], "Earth Cores" : 0, "Air Cores" : 0, "Water Cores" : 0}
+player2 = {"owned_tiles" : [], "Earth Cores" : 0, "Air Cores" : 0, "Water Cores" : 0}
+
+
+def coreEdit():
+    '''takes a core type and balance chance and edits a players dictionary according '''
+    
+
+def turn():
+    if len(player["owned_tiles"]) > 0: 
+        for i in player["owned_tiles"]: 
+            player["Earth Cores"] = player["Earth Cores"] + World[i]["Earth Growth"]
+        for i in player["owned_tiles"]: 
+            player["Air Cores"] = player["Air Cores"] + World[i]["Air Growth"]
+        for i in player["owned_tiles"]: 
+            player["Air Cores"] = player["Air Cores"] + World[i]["Air Growth"]
+
+
+
+        
+
+def main(): 
+    print("population is: " + str(brokefastMountains["Population"]))
+    brokefastMountains["Population"] = brokefastMountains["Population"] * 1.2
+    print("population is: " + str(brokefastMountains["Population"]))
+    print(brokefastMountains.keys())
+    print(brokefastMountains.values())
+    # take a turn
+    print(player["Earth Cores"], player["Water Cores"])
+
+if __name__ == "__main__": 
+    main()
