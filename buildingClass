@@ -1,0 +1,146 @@
+class Building:
+
+    def __init__(self):
+        self.buildingInfo = {}
+
+    def editBuildingInfo(self, keyword, newValue):
+        if type(keyword) == type(""):
+            if type(newValue) == type(self.buildingInfo[keyword]):
+                self.buildingInfo[keyword] += newValue
+
+    def addNewStat(self, keyword, newValue):
+        if type(keyword) == type(""):      #QUESTION FOR ELLIOT: HOW TO TEST TO MAKE SURE THE KEYWORD IS UNIQUE
+            self.buildingInfo.update({keyword: newValue})
+
+
+
+class World:
+
+    def __init__(self):
+        self.worldTileInfo = {"Name": "", "Population" : 0, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 1,  "Tile Ownership": True}
+
+        # self.stats["Name"] + str(len(worldTileList))
+        self.worldTileInfo["Name"] += str(len(worldTileList))
+
+
+    def editTileInfo(self, keyword, newValue):
+        if type(keyword) == type(""):
+            if type(newValue) == type(self.worldTileInfo[keyword]):
+                self.worldTileInfo[keyword] += newValue
+
+    def addNewStat(self, keyword, newValue):
+        if type(keyword) == type(""):      #QUESTION FOR ELLIOT: HOW TO TEST TO MAKE SURE THE KEYWORD IS UNIQUE
+            self.worldTileInfo.update({keyword: newValue})
+    def addBuilding(self, building):
+        '''takes a constructed building and adds it to the world tiless building list'''
+        self.worldTileInfo["Building List"] += [building]
+
+
+def createWorld(L):
+    '''takes a list L and returns a dictionary world built from the list with the info attached to tile numbers'''
+    newWorld = {}
+    count = 1
+    for i in range(len(L)):
+        newWorldTile = World()
+        newWorldTile.worldTileInfo["Name"] = L[i]
+        newWorldTile.worldTileInfo["ID"] = "worldtile" + str(count)
+        strcount = str(count)
+        label = {strcount: newWorldTile.worldTileInfo}
+        newWorld.update(label)
+
+        count +=1
+    return newWorld
+
+
+        
+worldTileNames=[ "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+
+worldTileList = []
+worldTileInfoList = {"Type": "World Tile", "Name": "", "ID": "worldTile", "Population": 10, "Population Growth": 2}
+
+worldTile1 = World()
+worldTile2 = World()
+
+
+
+
+
+
+villageInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Village", "Name": "", "Cost (Population)": 100, "Cost (Earth Cores)": 50, "Cost (Air Cores)": 0, "Cost (Water Cores)": 0, "Building Slots": 1, "Cost: (Village)": 0, "Cost: (Town)": 0}
+townInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Town", "Name": "", "Cost (Population)": 250, "Cost (Earth Cores)": 100, "Cost (Air Cores)": 25, "Cost (Water Cores)": 25, "Building Slots": 0, "Cost: (Village)": 1, "Cost: (Town)": 0}
+cityInfo = {"Type": "Building", "Building ID": "building", "Building Type": "City", "Name": "", "Cost (Population)": 500, "Cost (Earth Cores)": 200, "Cost (Air Cores)": 50, "Cost (Water Cores)": 50, "Building Slots": 0, "Cost: (Village)": 0, "Cost: (Town)": 1}
+buildingInfoList = [villageInfo, townInfo, cityInfo]
+
+buildingList = ["Village", "Town", "City", "Fortress", "Citadel", "Palace", "Temple", "Lighthouse", "Watchtower", "Wall", "Training Ground", "Smith"]
+buildingIds = []
+
+
+def createBuilding(L, buildingList):
+    '''input a building type and the createBuilding function will output an object of class Building with L's stats'''
+    newBuilding = Building()
+    buildingStats = newBuilding.buildingInfo 
+    buildingStats.update(L)
+    buildingStats["Building ID"] += str(len(buildingList))
+    
+    return buildingStats
+
+
+        
+
+    # '''input a building type and the createBuilding function will output an object of class Building with L's stats'''
+    # newBuilding = Building()
+    # buildingStats = newBuilding.buildingInfo 
+    # buildingStats.update(L)
+    # # print(buildingIds)
+    # print(str(len(buildingIds)))
+    # buildingStats["Building ID"] += str(1)
+    # keyword = L["Building Type"]
+    # object = {keyword: buildingStats}
+    # # object["Building ID"] += str(len(buildingIds))
+    # # buildingIds += object
+    # return object
+
+
+
+
+
+
+def main():
+    print()
+    print()
+    World = createWorld(worldTileNames)
+
+    for i in World:
+        count = 1
+        print(World[i])
+        count += 1
+        print()
+    print()
+    print()
+    createdBuildings = []
+    for i in buildingInfoList:
+        value = createBuilding(i)
+        createdBuildings += [value]
+    village1 = createBuilding(villageInfo)
+    createdBuildings += [village1]
+    
+    count = 0
+    for i in createdBuildings:
+        i["Building ID"] += str(count)
+        count+=1
+    for i in createdBuildings:
+        print(i)
+        print()
+    print()
+    
+    
+    
+
+
+
+        
+        
+
+
+if __name__ == "__main__": 
+    main()

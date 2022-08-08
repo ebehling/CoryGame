@@ -1,0 +1,45 @@
+class Champion:
+
+    def __init__(self):
+        self.championInfo = {}
+
+    
+
+
+theWinterKnight = {"Name": "The Winter Knight", "Affinity": "Water", "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 1, "Champion ID": "champion"}
+archibaldTheBrave = {"Name": "Archibald the Brave", "Affinity": "Earth", "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 0, "Champion ID": "champion"}
+theSunSummoner = {"Name": "The Sun Summoner", "Affinity": "Air", "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 0, "Champion ID": "champion"}
+Champions = [theWinterKnight, archibaldTheBrave, theSunSummoner]
+createdChampionList = []
+
+
+def createChampion(championInfo, createdChampionList):
+    '''input a champion type and the createChamp function will output an object of class Champ with that champs stats'''
+    newChampion = Champion()
+    championStats = newChampion.championInfo 
+    championStats.update(championInfo)
+    championStats["Champion ID"] += str(len(createdChampionList))
+    createdChampionList += [championStats["Champion ID"]]
+    
+    return championStats
+
+
+
+
+def main():
+    print()
+    print()
+    for champion in Champions:
+        print(createChampion(champion, createdChampionList))
+        print()
+
+    
+
+    
+    
+
+        
+
+
+if __name__ == "__main__": 
+    main()

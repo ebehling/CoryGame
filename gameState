@@ -1,181 +1,228 @@
-buildingIds = []
-
+### ###  NOTES ### ### 
+#used the keys in the owned tiles list as keys in the world diction to get to brokefast mountain dict
+#World{playerInfo{"owned_tiles"}[0]}
+### ### ### ### 
 
 class Building:
-    def __init__(self, name):
-        self.name = name
 
-    def createBuilding(self, buildingInfo):
-        self.buildingInfo = buildingInfo
-     
-        newBuilding = (self.buildingInfo)
-        return newBuilding
+    def __init__(self):
+        self.buildingInfo = {}
+
+    def editBuildingInfo(self, keyword, newValue):
+        if type(keyword) == type(""):
+            if type(newValue) == type(self.buildingInfo[keyword]):
+                self.buildingInfo[keyword] += newValue
+
+    def addNewStat(self, keyword, newValue):
+        if type(keyword) == type(""):      #QUESTION FOR ELLIOT: HOW TO TEST TO MAKE SURE THE KEYWORD IS UNIQUE
+            self.buildingInfo.update({keyword: newValue})
+
+class Champion:
+
+    def __init__(self, id):
+        self.id = id # add this information into the dictionary when creating it -- champion.id()
+        self.championInfo = {}
+
+    
+class World:
+    def __init__(self):
+        self.worldTileInfo = {"Name": "", "Population" : 0, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 0,  "Tile Ownership": False}
+
+    def editTileInfo(self, keyword, newValue):
+        if type(keyword) == type(""):
+            if type(newValue) == type(self.worldTileInfo[keyword]):
+                self.worldTileInfo[keyword] += newValue
+
+    def addNewStat(self, keyword, newValue):
+        if type(keyword) == type(""):      #QUESTION FOR ELLIOT: HOW TO TEST TO MAKE SURE THE KEYWORD IS UNIQUE
+            self.worldTileInfo.update({keyword: newValue})
 
 
-
-villageInfo = { "Type": "Village", "Name": "", "Cost (Population)": 100, "Population Growth": 1, "Building Slots": 1,}
-village = Building(villageInfo)
-townInfo = {"Type": "Town", "Name": "", "Cost: (Village)": 1, "Cost (Population)": 250, "Cost (Earth Cores)": 50, "Building Slots": 0}
-town = Building(townInfo)
-cityInfo = {"Type": "City", "Name": "", "Cost: (Town)": 1, "Cost (Population)": 500, "Cost (Earth Cores)": 100, "Cost (Air Cores)": 50, "Cost (Water Cores)": 50, "Building Slots": 0}
-city = Building(cityInfo)
 
 class Player:
-    def __init__(self, name):
-        self.name = name
-  
-    def createNewPlayer(self, playerInfo):
-        self.playerInfo = playerInfo
-    
-        newPlayer = (self.playerInfo)
-        return newPlayer
-    # def editCoreTypes(self, coretype, amount)
 
-
-
-    player.editCoreTypes()
-
+    def __init__(self):
+        self.playerInfo = {"Type": "Player", "ID": "player", "Name": "", "Earth Cores" : 100, "Air Cores" : 100 , "Water Cores" : 100, "owned_tiles" : {}, "owned_champions": {}}
+        # self.stats["Name"] + str(len(worldTileList))
         
 
-playerInfo = {"owned_tiles" : {"1": brokefastMountains, "2": wanderingForest1}, "owned_champions": {"Champion1": theWinterKnight, "Champion2": archibaldTheBrave}, "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
-player = Player(playerInfo)
+    def replacePlayerInfo(self, keyword, newValue):
+        if type(keyword) == type(""):
+            if type(newValue) == type(self.playerInfo[keyword]):
+                self.playerInfo[keyword] += newValue
 
+    def editNumberStats(self, keyword, change):
+        if type(keyword) == type(""):
+            if type(change) == type(1) or type(''):
+                self.playerInfo[keyword] += change
 
+    def addNewStat(self, keyword, newValue):
+        if type(keyword) == type(""):      #QUESTION FOR ELLIOT: HOW TO TEST TO MAKE SURE THE KEYWORD IS UNIQUE
+            self.playerInfo.update({keyword: newValue})
 
-
-
-worldTileNames=["The Void", "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+### ### ALL BASE GAME INFO GOES HERE ### ###
 menuLabels=["Population:", "Pop Growth:", "Earth Cores:", "Air Cores:", "Water Cores:", "Earth Alignment:", "Air Alignment:", "Water Alignment:"]
+worldTileNames=[ "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+buildingTypes = ["Village", "Town", "City", "Fortress", "Citadel", "Palace", "Temple", "Lighthouse", "Watchtower", "Wall", "Training Ground", "Smith"]
 
+playerNames = ["Cory", "Elliot", "Will", "Jack"]   
+
+villageInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Village", "Name": "", "Cost (Population)": 100, "Cost (Earth Cores)": 50, "Cost (Air Cores)": 0, "Cost (Water Cores)": 0, "Building Slots": 1, "Cost: (Village)": 0, "Cost: (Town)": 0}
+townInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Town", "Name": "", "Cost (Population)": 250, "Cost (Earth Cores)": 100, "Cost (Air Cores)": 25, "Cost (Water Cores)": 25, "Building Slots": 0, "Cost: (Village)": 1, "Cost: (Town)": 0}
+cityInfo = {"Type": "Building", "Building ID": "building", "Building Type": "City", "Name": "", "Cost (Population)": 500, "Cost (Earth Cores)": 200, "Cost (Air Cores)": 50, "Cost (Water Cores)": 50, "Building Slots": 0, "Cost: (Village)": 0, "Cost: (Town)": 1}
+buildingInfoList = [villageInfo, townInfo, cityInfo]
+createdBuildingList = []
+
+buildingTypes = ["Village", "Town", "City", "Fortress", "Citadel", "Palace", "Temple", "Lighthouse", "Watchtower", "Wall", "Training Ground", "Smith"]
+worldTileDict = {"1": "Brokefast Mountains", "2": "Wandering Forest (1)", "3": "Eastern Highlands", "4": "The Citadel", "5": "Wandering Forest (2)", "6": "Eastern Lowlands", "7": "The Foglands"}
+
+brokefastMountains = {"Name": "The Brokefast Mountains", "Population" : 10000, "Pop Growth" : 2, "Earth Growth" : 2, "Air Growth" : 1, "Water Growth" : 0, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 1,  "Tile Ownership": True}
+wanderingForest1 = {"Name": "The Northern Wandering Forest","Population" : 10, "Pop Growth" : 3, "Earth Growth" : 2, "Air Growth" : 0, "Water Growth" : 1, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 2, "Tile Ownership": True}
+easternHighlands = {"Name": "The Eastern Highlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 1, "Air Growth" : 2, "Water Growth" : 0, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 3, "Tile Ownership": True}
+theCitadel = {"Name": "The Citadel", "Population" : 10, "Pop Growth" : 4, "Earth Growth" : 1, "Air Growth" : 1, "Water Growth" : 1, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 4, "Tile Ownership": True}
+wanderingForest2 = {"Name": "The Southern Wandering Forest", "Population" : 10, "Pop Growth" : 3, "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 2, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0} , "World Tile Number": 5, "Tile Ownership": True}
+easternLowlands = {"Name": "The Eastern Lowlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 0, "Air Growth" : 2, "Water Growth" : 1, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 6, "Tile Ownership": True}
+theFoglands = {"Name": "The Foglands", "Population" : 10, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 2, "Buildings": {}, "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 7, "Tile Ownership": True}
+preWorld = [brokefastMountains, wanderingForest1, easternHighlands, theCitadel, wanderingForest2, easternLowlands, theFoglands]
+
+theWinterKnight = {"Name": "The Winter Knight", "Affinity": "Water", "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 1, "Champion ID": "champion", "Owner": '', "Champion Number": 1}
+archibaldTheBrave = {"Name": "Archibald the Brave", "Affinity": "Earth", "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 0, "Champion ID": "champion", "Owner": '', "Champion Number": 2}
+theSunSummoner = {"Name": "The Sun Summoner", "Affinity": "Air", "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 0, "Champion ID": "champion", "Owner": '', "Champion Number": 3}
+Champions = [theWinterKnight, archibaldTheBrave, theSunSummoner]
+createdChampionList = []
+
+### ### ALL GAME FUNCTIONS OUTSIDE OF THE MAIN ITERATION GO HERE ### ###
+
+def createPlayer(L):
+    ''''''
+    newPlayerList = {}
+    count = 1
+    for i in range(len(L)):
+        newPlayer = Player()
+        newPlayer.playerInfo["Name"] = L[i]
+        newPlayer.playerInfo["ID"] = "player" + str(count)
+        label = {newPlayer.playerInfo["Name"]: newPlayer.playerInfo}
+        newPlayerList.update(label)
+
+        count +=1
+    return newPlayerList
+       
+def editPlayer(players, name, stat, change):
+    '''NUMBERS ONLY'''
+    for i in players:
+        if type(change) == type(1):
+            if name == players[i]["Name"]:
+                players[i][stat] += change
+
+
+def createWorld(L):
+    '''takes a list L and returns a dictionary world built from the list with the info attached to tile numbers'''
+    newWorld = {}
+    count = 1
+    for i in range(len(L)):
+        newWorldTile = World()
+        newWorldTile.worldTileInfo["Name"] = L[i]
+        newWorldTile.worldTileInfo["ID"] = "worldtile" + str(count)
+        strCount = str(count)
+        label = {strCount: newWorldTile.worldTileInfo}
+        newWorld.update(label)
+
+        count +=1
+    return newWorld
+
+
+def createBuilding(L, createdBuildingList):
+    '''input a building type and the createBuilding function will output an object of class Building with L's stats'''
+    newBuilding = Building()
+    buildingStats = newBuilding.buildingInfo 
+    buildingStats.update(L)
+    buildingStats["Building ID"] += str(len(createdBuildingList))
+    createdBuildingList += [buildingStats["Building ID"]]
+    
+    return buildingStats
+
+
+def createChampion(championInfo, createdChampionList):
+    '''input a champion type and the createChamp function will output an object of class Champ with that champs stats'''
+    newChampion = Champion()
+    championStats = newChampion.championInfo 
+    print(championStats)
+    championStats.update(championInfo)
+    championStats["Champion ID"] += str(len(createdChampionList))
+    createdChampionList += [championStats["Champion ID"]]
+    return championStats
 
 
 def menu():
     """Prints the menu of options that the user can choose."""
     print()
-    print("(0) Enter a new World Tile State")
-    print("(1) Change Ownership of a World Tile")
+    print("(0) ")
+    print("(1) Enter a new turn number")
     print("(2) Advance to the next World Tile State")
-    print("(3) Print the Current World Tile State")
+    print("(3) ")
     print("(4) Change a Players Cores")
     print("(5) View or Edit a World Tile")
     print("(6) Add a new Player (not working)")
+    print("(7) Change the Ownership of a tile")
+    print("(8) Add a new champion to a player")
     print("(9) Break! (quit)")
     print()
 
-def turnByTurnGrowth(wt_number):
-    '''wt number and returns 
-    a list of the new pop, EC, AC and WC amounts for that tile '''
-    
-    popG = wt_number[0]+wt_number[1]
-    ECs = wt_number[2]+wt_number[5]
-    ACs = wt_number[3]+wt_number[6]
-    WCs = wt_number[4]+wt_number[7]
-    return [popG, wt_number[1], ECs, ACs, WCs, wt_number[5],wt_number[6],wt_number[7]]
 
-def boardTurn(L):
-    '''takes the current worldTile state and returns the state of the board for the next turn'''
-    L0 = []
-    for i in range(len(L)):
-        L0 += [turnByTurnGrowth(L[i])]
-    return L0
-
-allBuildings = ["Village", "Town", "City", "Fortress", "Citadel", "Palace", "Temple", "Lighthouse", "Watchtower", "Wall", "Training Ground", "Smith"]
-
-
-brokefastMountains = {"Name": "The Brokefast Mountains", "Population" : 10000, "Pop Growth" : 2, "Earth Growth" : 2, "Air Growth" : 1, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 1,  "Tile Ownership": True}
-wanderingForest1 = {"Name": "The Northern Wandering Forest","Population" : 10, "Pop Growth" : 3, "Earth Growth" : 2, "Air Growth" : 0, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 2, "Tile Ownership": True}
-easternHighlands = {"Name": "The Eastern Highlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 1, "Air Growth" : 2, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 3, "Tile Ownership": True}
-theCitadel = {"Name": "The Citadel", "Population" : 10, "Pop Growth" : 4, "Earth Growth" : 1, "Air Growth" : 1, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 4, "Tile Ownership": True}
-wanderingForest2 = {"Name": "The Southern Wandering Forest", "Population" : 10, "Pop Growth" : 3, "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0} , "World Tile Number": 5, "Tile Ownership": True}
-easternLowlands = {"Name": "The Eastern Lowlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 0, "Air Growth" : 2, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 6, "Tile Ownership": True}
-theFoglands = {"Name": "The Foglands", "Population" : 10, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 7, "Tile Ownership": True}
+def nextTurn(currentPlayers, World):
+    '''advances the board to the next turn number and auto allocates player and world tile resources'''
+    for Player in currentPlayers:
+        if len(currentPlayers[Player]["owned_tiles"]) > 0:
+            for tile in World:
+                for worldTile in currentPlayers[Player]["owned_tiles"]:
+                    if currentPlayers[Player]["owned_tiles"][worldTile] == World[tile]["Name"]:
+                        currentPlayers[Player]["Earth Cores"] += World[tile]["Earth Growth"]
+                        currentPlayers[Player]["Air Cores"] += World[tile]["Air Growth"]
+                        currentPlayers[Player]["Water Cores"] += World[tile]["Water Growth"]
+    for tile in World:
+        World[tile]["Population"] += World[tile]["Pop Growth"]    
+    for Player in currentPlayers: # add a way to increase champion affinity
+        for champs in currentPlayers[Player]["owned_champions"]:
+            currentPlayers[Player]["Earth Cores"] += currentPlayers[Player]["owned_champions"][champs]["Earth Growth"]
+            currentPlayers[Player]["Air Cores"] += currentPlayers[Player]["owned_champions"][champs]["Air Growth"]
+            currentPlayers[Player]["Water Cores"] += currentPlayers[Player]["owned_champions"][champs]["Water Growth"]
 
 
-
-
-
-
-
-
-
-theWinterKnight = {"Name": "The Winter Knight", "Affinity": "Water", "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 1}
-archibaldTheBrave = {"Name": "Archibald the Brave", "Affinity": "Earth", "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 0}
-theSunSummoner = {"Name": "The Sun Summoner", "Affinity": "Air", "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 0}
-
-
-World = {"1": brokefastMountains, "2": wanderingForest1, "3": easternHighlands, "4": theCitadel, "5": wanderingForest2, "6": easternLowlands, "7": theFoglands}
-Champions = {"Champion1": theWinterKnight, "Champion2": archibaldTheBrave, "Champion3": theSunSummoner}
-
-playerInfo = {"owned_tiles" : {"1": brokefastMountains, "2": wanderingForest1}, "owned_champions": {"Champion1": theWinterKnight, "Champion2": archibaldTheBrave}, "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
-player = Player(playerInfo)
-
-player2Info = {"owned_tiles" : {}, "owned_champions": {"Champion3": theSunSummoner}, "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
-player2 = Player(player2Info)
-
-#used the keys in the owned tiles list as keys in the world diction to get to brokefast mountain dict
-#World{playerInfo{"owned_tiles"}[0]}
-
-#print("god I hope this works " + str(World["1"]["Population"]))
-
-# player = {"owned_tiles" : ["1", "2"], "owned_champions": ["Champion1", "Champion2"], "Earth Cores" : 1000, "Air Cores" : 1000, "Water Cores" : 1000}
-# player2 = {"owned_tiles" : [], "owned_champions": [], "Earth Cores" : 0, "Air Cores" : 0, "Water Cores" : 0}
-
-currentPlayers = []
-
-
-def coreEdit():
-
-    print("(1) Earth Cores")
-    print("(2) Air Cores")
-    print("(3) Water Cores")
-    coreType = input("What Core Would you like to update? ")   
-    balanceDifference = input('Enter the change in cores: ')
-    
-    
-    print(coreType, balanceDifference)
-    if coreType == '1': 
-        if player["Earth Cores"] + int(balanceDifference) < 0:
-            print("Not enough cores!")
-        else:
-            player["Earth Cores"] = player["Earth Cores"] + int(balanceDifference)
-    if coreType == '2':    
-        if player["Air Cores"] + int(balanceDifference) < 0:
-            print("Not enough cores!")
-        else:
-            player["Air Cores"] = player["Air Cores"] + int(balanceDifference)
-    if coreType == '3': 
-        if player["Water Cores"] + int(balanceDifference) < 0:
-            print("Not enough cores!")
-        else:
-            player["Water Cores"] = player["Water Cores"] + int(balanceDifference)
+def coreEdit(playerName, coreType, difference, currentPlayers):
+    if coreType == '1':
+        coreType = "Earth Cores"
+    if coreType == '2':
+        coreType = "Air Cores"
+    if coreType == '3':
+        coreType = "Water Cores"
+    if currentPlayers[playerName][coreType] + int(difference) > 0: 
+        currentPlayers[playerName][coreType] += int(difference)
     else:
         print("Not sure what to do with that!")
 
     
-def addTileOwnership():
-    print()
-    print("The Current Tile Ownership:")
-    for i in World:
-        if World[i]["Tile Ownership"] == True:
-            for j in currentPlayers:
-                for k in 
-                if str(World[i]["World Tile Number"]) in j
-                
-            print("(", World[i]["World Tile Number"], ")", World[i]["Name"])
-        if World[i]["Tile Ownership"] == False:
-            print("(", World[i]["World Tile Number"], ",", World[i]["Name"])
+def addTileOwnership(playerName, tile, currentPlayers, World):
+    previousOwner = World[tile]["Tile Ownership"]
+    #Elliot = previousOwner
+    if World[tile]["Tile Ownership"] != playerName:
+        World[tile]["Tile Ownership"] = playerName
+        (currentPlayers[playerName]["owned_tiles"]).update({str(World[tile]["World Tile Number"]): World[tile]["Name"]})
+    for Player in currentPlayers:
+        print(Player)
+        if previousOwner == currentPlayers[Player]["Name"] and previousOwner != playerName:
+            dict = currentPlayers[Player]["owned_tiles"]
+            del dict[tile]
+            pass
 
+def addChampionOwnership(playerName, championChoice, currentPlayers, World):
+        for i in Champions:
+            print(championChoice)
+            print(type(championChoice))
+            if i["Champion Number"] == int(championChoice):
+                newChampion = createChampion(i, createdChampionList)
+                (currentPlayers[playerName]["owned_champions"]).update({str(newChampion["Champion Number"]): newChampion})
+                newChampion["Owner"] += playerName
 
-            
-    tile = input("Enter the tile number you wish to change")
-    
-    print("The Current owner of ")
-    if World[tile]["Tile Ownership"] == True:
-        pass
-        
-    
-    
-    
 
 def editWorldTile():
     print()
@@ -234,7 +281,6 @@ def editWorldTile():
                         World[tile]["Pop Growth"] = World[tile]["Pop Growth"] + 1
                         World[tile]["Upgradeable Buildings"]["Village Count"] -=1
                         World[tile]["Upgradeable Buildings"]["Town Count"] +=1
-
         elif buildingChoice == '3':
             if World[tile]["Population"] >= cityInfo["Cost (Population)"]:
                 if player["Earth Cores"] >= cityInfo["Cost (Earth Cores)"]:
@@ -250,29 +296,9 @@ def editWorldTile():
                                 player["Water Cores"] -= cityInfo["Cost (Water Cores)"]
                                 World[tile]["Pop Growth"] = World[tile]["Pop Growth"] + 1
                                 World[tile]["Upgradeable Buildings"]["Town Count"] -=1
-                                World[tile]["Upgradeable Buildings"]["City Count"] +=1
-                    
+                                World[tile]["Upgradeable Buildings"]["City Count"] +=1             
         else:
             pass
-
-    else:
-        pass
-        
-        
-        
-
-
-
-
-
-
-
-    
-        
-       
-            
-
-
     if choice == '4':
         print("(1)Change Earth Affinty (Current:", World[tile]["Earth Growth"],')')
         print("(2)Change Air Affinty (Current:", World[tile]["Air Growth"],')')
@@ -287,130 +313,102 @@ def editWorldTile():
             World[tile]["Water Growth"] = World[tile]["Water Growth"] + int(difference)
         else:
             pass
+            
     else: 
         pass
 
-
-    
-        
-
-
-
-
-
-def turn():
-
-    for i in World:  # advances population per turn 
-        World[i]["Population"] = World[i]["Population"] + World[i]["Pop Growth"]
-    if len(player["owned_tiles"]) > 0: 
-        for i in player["owned_tiles"]: 
-            player["Earth Cores"] = player["Earth Cores"] + World[i]["Earth Growth"]
-        for i in player["owned_tiles"]: 
-            player["Air Cores"] = player["Air Cores"] + World[i]["Air Growth"]
-        for i in player["owned_tiles"]: 
-            player["Water Cores"] = player["Water Cores"] + World[i]["Water Growth"]
-    if len(player["owned_champions"]) > 0:
-        for i in player["owned_champions"]: 
-            player["Earth Cores"] = player["Earth Cores"] + Champions[i]["Earth Growth"]
-        for i in player["owned_champions"]: 
-            player["Air Cores"] = player["Air Cores"] + Champions[i]["Air Growth"]
-        for i in player["owned_champions"]: 
-            player["Water Cores"] = player["Water Cores"] + Champions[i]["Water Growth"]
-
-    
-    
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### ### THE MAIN ITERATION LOOP ### ### 
 
 def main():
-    """The main user-interaction loop."""
-    secret_value = 4.2
-
-   
-    player1 = player.createNewPlayer(playerInfo)
-    player2 = player.createNewPlayer(player2Info)
-
-    currentPlayers = [player1, player2]
-    
-
+    """The main user-interaction loop. All board and player 
+    creation should happen before the while-true loop begins."""
+    ### COUNTERS AND VARIABLE DATA ###
     turnNumber = 0
-    worldTileNames=["The Void", "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
-    #print("population is: " + str(brokefastMountains["Population"]))
-    #print("population is: " + str(brokefastMountains["Population"]))
-    #print(brokefastMountains.keys())
-    #print(brokefastMountains.values())
-    # take a turn
+
+    ### PLAYER CREATION ###
+    playerNames = ["Cory", "Elliot", "Will", "Jack"]   
+    currentPlayers = createPlayer(playerNames) # This is a dictionary of the players with thier names as keywords to their stats
+
+    (currentPlayers["Cory"]["owned_tiles"]).update({"1": "Brokefast Mountains"})
+    
+    ### WORLD TILE CREATION ### 
    
-    while True:       # The user-interaction loop
+    worldTileNames = [ "Brokefast Mountains", "Wandering Forest (1)", "Eastern Highlands", "The Citadel", "Wandering Forest (2)", "Eastern Lowlands", "The Foglands"]
+    worldTileDict = {"1": "Brokefast Mountains", "2": "Wandering Forest (1)", "3": "Eastern Highlands", "4": "The Citadel", "5": "Wandering Forest (2)", "6": "Eastern Lowlands", "7": "The Foglands"}
+    brokefastMountains = {"Name": "Brokefast Mountains", "Population" : 10000, "Pop Growth" : 2, "Earth Growth" : 2, "Air Growth" : 1, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 1,  "Tile Ownership": 'Cory'}
+    wanderingForest1 = {"Name": "Wandering Forest (1)", "Population" : 10, "Pop Growth" : 3, "Earth Growth" : 2, "Air Growth" : 0, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 2, "Tile Ownership": ''}
+    easternHighlands = {"Name": "Eastern Highlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 1, "Air Growth" : 2, "Water Growth" : 0, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 3, "Tile Ownership": ''}
+    theCitadel = {"Name": "The Citadel", "Population" : 10, "Pop Growth" : 4, "Earth Growth" : 1, "Air Growth" : 1, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 4, "Tile Ownership": ''}
+    wanderingForest2 = {"Name": "Wandering Forest (2)", "Population" : 10, "Pop Growth" : 3, "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0} , "World Tile Number": 5, "Tile Ownership": ''}
+    easternLowlands = {"Name": "Eastern Lowlands", "Population" : 10, "Pop Growth" : 1, "Earth Growth" : 0, "Air Growth" : 2, "Water Growth" : 1, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 6, "Tile Ownership": ''}
+    theFoglands = {"Name": "The Foglands", "Population" : 10, "Pop Growth" : 2, "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 2, "Buildings": [], "Available Building Slots": 4, "Upgradeable Buildings": {"Village Count": 0, "Town Count": 0, "City Count": 0 }, "World Tile Number": 7, "Tile Ownership": ''}
+    preWorld = [brokefastMountains, wanderingForest1, easternHighlands, theCitadel, wanderingForest2, easternLowlands, theFoglands]
+
+    World = createWorld(worldTileNames)
+    #preWorldCount = 0 
+    # for i in World: # For my preset world here 
+    #     id = {"ID": i["ID"]}
+    #     print(i["Population"])
+    #     i = {}
+    #     i.update(preWorld[preWorldCount])
+    #     print(i["Population"])
+    #     i.update(id)
+    #     preWorldCount += 1
+    for tile in World: 
+        for area in range(len(preWorld)):
+            if World[tile]["Name"] == preWorld[area]["Name"]:
+                id = {"ID": World[tile]["ID"]}
+                World[tile] = {}
+                (World[tile]).update(preWorld[area])
+                (World[tile]).update(id)
+
+    ### BUILDING CREATION ###
+
+    villageInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Village", "Name": "", "Cost (Population)": 100, "Cost (Earth Cores)": 50, "Cost (Air Cores)": 0, "Cost (Water Cores)": 0, "Building Slots": 1, "Cost: (Village)": 0, "Cost: (Town)": 0}
+    townInfo = {"Type": "Building", "Building ID": "building", "Building Type": "Town", "Name": "", "Cost (Population)": 250, "Cost (Earth Cores)": 100, "Cost (Air Cores)": 25, "Cost (Water Cores)": 25, "Building Slots": 0, "Cost: (Village)": 1, "Cost: (Town)": 0}
+    cityInfo = {"Type": "Building", "Building ID": "building", "Building Type": "City", "Name": "", "Cost (Population)": 500, "Cost (Earth Cores)": 200, "Cost (Air Cores)": 50, "Cost (Water Cores)": 50, "Building Slots": 0, "Cost: (Village)": 0, "Cost: (Town)": 1}
+    buildingInfoList = [villageInfo, townInfo, cityInfo]
+    createdBuildingList = []
+
+
+    buildingTypes = ["Village", "Town", "City", "Fortress", "Citadel", "Palace", "Temple", "Lighthouse", "Watchtower", "Wall", "Training Ground", "Smith"]
+
+    ### CHAMPION CREATION ###
+
+    theWinterKnight = {"Name": "The Winter Knight", "Affinity": "Water", "Earth Growth" : 0, "Air Growth" : 0, "Water Growth" : 1, "Champion ID": "champion", "Owner": '', "Champion Number": 1}
+    archibaldTheBrave = {"Name": "Archibald the Brave", "Affinity": "Earth", "Earth Growth" : 1, "Air Growth" : 0, "Water Growth" : 0, "Champion ID": "champion", "Owner": '', "Champion Number": 2}
+    theSunSummoner = {"Name": "The Sun Summoner", "Affinity": "Air", "Earth Growth" : 0, "Air Growth" : 1, "Water Growth" : 0, "Champion ID": "champion", "Owner": '', "Champion Number": 3}
+    Champions = [theWinterKnight, archibaldTheBrave, theSunSummoner]
+    createdChampionList = []
+    
+   ### THE USER INTERACTION LOOP ###
+    while True:
         print()
         print("---------------------------------------")
-        print(player1)
-        print()
-        print("Current Turn Number:", turnNumber)
-        print("Player 1 Stats")
-        print("    Current Earth Cores:", player1["Earth Cores"])
-        print("    Current Air Cores:", player1["Air Cores"])
-        print("    Current Water Cores:", player1["Water Cores"])
-        print()
-        print("Player 2 Stats")
-        print("    Current Earth Cores:", player2["Earth Cores"])
-        print("    Current Air Cores:", player2["Air Cores"])
-        print("    Current Water Cores:", player2["Water Cores"])
-        print()
-        for i in World:
-            print(World[i]["Name"],': Population:', World[i]["Population"])
-
-          
+        for i in currentPlayers:
+            print(currentPlayers[i])
+            print()
+        for tile in World:
+            print(World[tile])
+            print()
+        # for tile in World:
+        #     print(World[tile]["Name"],': Population:', World[tile]["Population"])
+        ### PRINTS THE MENU OF OPTIONS AND CHECKS INPUT ###
         menu()
         choice = input("Choose an option: ")
-
-        #
-        # "Clean and check" the user's input
-        # 
+        
         try:
-            choice = int(choice)   # Make into an int!
+            choice = int(choice)   # Make into an int
         except:
             print("I didn't understand your input! Continuing...")
             continue
-
-        #
-        # Run the appropriate menu option
-        #
+        ### CHOICE SELECTION ###
         if choice == 9:    # We want to quit
             break          # Leaves the while loop altogether
-
         elif choice == 0:  # Enters a new World Tile State (DELETES CURRENT STATE!!!!)
-            newL = input("Enter a new list: ")    # Enter _something_
-            
-            #
-            # "Clean and check" the user's input
-            #
-            try: 
-                newL = eval(newL) # eval runs Python's interpreter! Note: Danger!
-                if type(newL) != type([]): 
-                    print("That didn't seem like a list. Not changing L.")
-                else: 
-                    L = newL  # Here, things were OK, so let's set our list, L
-            except:
-                print("I didn't understand your input. Not changing L.")
-
-        elif choice == 1: # Change the current turn number 
-            newTurnNumber = input("Enter a new turn number: ")    # Enter _something_
+            pass
+        elif choice == 1: # CHANGE THE CURRENT TURN NUMBER (DOES NOT EFFECT TIME)
+            newTurnNumber = input("Enter a new turn number: ") 
             try: 
                 newTurnNumber = eval(newTurnNumber) # eval runs Python's interpreter! Note: Danger!
                 if type(newTurnNumber) != type(int): 
@@ -419,14 +417,9 @@ def main():
                     turnNumber = newTurnNumber  # Here, things were OK
             except:
                 print("I didn't understand your input. Not changing the turn number.")
-
-
         elif choice == 2:  # Advance to the next world tile state
-            addTileOwnership()
-        
-
-                       
-
+            nextTurn(currentPlayers, World)
+            turnNumber += 1
         elif choice == 3:  # Prints the current World Tile State
             print()
             
@@ -434,95 +427,37 @@ def main():
 
         elif choice == 4: #Edit a Players cores 
 
-            coreEdit()
-            print("Your  Core balance is")
-            print("Earth Cores:", player["Earth Cores"])
-            print("Air Cores:", player["Air Cores"])
-            print("Water Cores:", player["Water Cores"])
-            
+            playerName = input("Select the Player's cores you wish to edit: ")
+            print("(1) Earth Cores")
+            print("(2) Air Cores")
+            print("(3) Water Cores")
+            coreType = input("Select the core type you wish to edit: ")
+            difference = input("Input the change in cores ")
 
-           
+            coreEdit(playerName, coreType, difference, currentPlayers)
+        
         elif choice == 5: #Edit a World tiles population stats
             editWorldTile()
-            
-
         
+        elif choice == 7:
+            newOwner = input("Which player is getting the new tile? ")
+            tileNumber = input("What tile do you wish to change the ownership of")
+            addTileOwnership(newOwner, tileNumber, currentPlayers, World)
+            print()
+
+        elif choice == 8:
+            print("The current champions are:")
+            thisCount = 1
+            for i in Champions:
+                print("(", thisCount, "): ", i["Name"])
+                thisCount += 1
+            newChampion = input("What Champion Would you like to add? ")
+            newOwner = input("Which player is getting the new Champion? ")
+            addChampionOwnership(newOwner,newChampion, currentPlayers, World)
+
         else:
             print(choice, " ?      That's not on the menu!")
 
     print()
     print("See you yesterday!")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#  print("The Current World Tile State is:")
-#         print()
-#         for i in range(len(L)):
-#             print(worldTileNames[i], ":", L[i])
